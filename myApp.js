@@ -13,7 +13,7 @@ const Schema = mongoose.Schema;
 const personSchema = new Schema({
   name: { type: String, required: true },
   age: Number,
-  favouriteFoods: [String],
+  favoriteFoods: [String],
 });
 
 const Person = mongoose.model("Person", personSchema);
@@ -22,7 +22,7 @@ let newPerson = function (done) {
   return new Person({
     name: "Hunter Lacefield",
     age: 27,
-    favouriteFoods: ["Pizza", "Chicken", "French Fries"],
+    favoriteFoods: ["Pizza", "Chicken", "French Fries"],
   });
   if (error) return done(error);
   done(null, result);
