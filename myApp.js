@@ -6,23 +6,29 @@ mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-const Schema = mongoose.Schema;
-//** 2) Create a model
-// First we need a Schema. These are the building block for Models that define the shape of the documents within collection.
-// link https://mongoosejs.com/docs/guide.html for mongoose help. Includes schemas, models, query helpers and more
-const personSchema = new Schema({
-  name: { type: String, required: true },
-  age: Number,
-  favouriteFoods: [String],
-});
+// const Schema = mongoose.Schema;
+// //** 2) Create a model
+// // First we need a Schema. These are the building block for Models that define the shape of the documents within collection.
+// // link https://mongoosejs.com/docs/guide.html for mongoose help. Includes schemas, models, query helpers and more
+// const personSchema = new Schema({
+//   name: { type: String, required: true },
+//   age: Number,
+//   favouriteFoods: [String],
+// });
 
-const Person = mongoose.model("Person", personSchema);
+// const Person = mongoose.model("Person", personSchema);
 
-let newPerson = new Person({
-  name: "Hunter Lacefield",
-  age: 27,
-  favouriteFoods: ["Pizza", "Chicken", "French Fries"],
-});
+// let newPerson = function (done) {
+//   return new Person({
+//     name: "Hunter Lacefield",
+//     age: 27,
+//     favouriteFoods: ["Pizza", "Chicken", "French Fries"],
+//   });
+//   if (error) return done(error);
+//   done(null, result);
+// };
+
+let Person;
 
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
