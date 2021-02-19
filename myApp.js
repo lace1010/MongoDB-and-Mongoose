@@ -1,15 +1,12 @@
 require("dotenv").config();
 const mongoose = require("mongoose"); // Need to require mongoose
-import mongoose from "mongoose";
-const { Schema } = mongoose;
-
 //** 1) Install and set up mongoose. (connected it to heroku as well.)
 mongoose.connect(process.env.MONGO_URI, {
   // The MONGO_URI string is in sample.env. Be sure to change <password> to the user's actual password for mongoose to connect to the database
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-
+const Schema = mongoose.Schema;
 //** 2) Create a model
 // First we need a Schema. These are the building block for Models that define the shape of the documents within collection.
 // link https://mongoosejs.com/docs/guide.html for mongoose help. Includes schemas, models, query helpers and more
@@ -20,6 +17,12 @@ const personSchema = new Schema({
 });
 
 const Person = mongoose.model("Person", personSchema);
+
+let newPerson = new Person({
+  name: "Hunter Lacefield",
+  age: 27,
+  favouriteFoods: ["Pizza", "Chicken", "French Fries"],
+});
 
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
