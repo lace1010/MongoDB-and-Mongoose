@@ -28,8 +28,6 @@ let newPerson = function (done) {
   done(null, result);
 };
 
-let Person;
-
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
 };
