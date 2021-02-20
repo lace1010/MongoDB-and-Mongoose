@@ -40,7 +40,7 @@ const createAndSavePerson = (done) => {
 //** 4) Create Many Records with model.create()
 const createManyPeople = (arrayOfPeople, done) => {
   // Need to use Person as that is the model we want to create our peopoe in
-  Person.create(arrayOfPeople, (done) => {
+  Person.create(arrayOfPeople, (error, data) => {
     // Need to add the function that handles error after saving arrayOfPeople (.create() uses .save() for each person in the array)
     if (error) return done(error);
     done(null, data);
