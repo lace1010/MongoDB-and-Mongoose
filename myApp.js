@@ -1,5 +1,6 @@
 require("dotenv").config();
 const mongoose = require("mongoose"); // Need to require mongoose
+
 //** 1) Install and set up mongoose. (connected it to heroku as well.)
 mongoose.connect(process.env.MONGO_URI, {
   // The MONGO_URI string is in sample.env. Be sure to change <password> to the user's actual password for mongoose to connect to the database
@@ -7,6 +8,7 @@ mongoose.connect(process.env.MONGO_URI, {
   useUnifiedTopology: true,
 });
 const Schema = mongoose.Schema;
+
 //** 2) Create a model
 // First we need a Schema. These are the building block for Models that define the shape of the documents within collection.
 // link https://mongoosejs.com/docs/guide.html for mongoose help. Includes schemas, models, query helpers and more
@@ -28,16 +30,24 @@ let bishBoy = new Person({
 //** 3) Create and Save a Record of a Model
 // Create and save the bishBoy person with a function
 const createAndSavePerson = (done) => {
-  bishBoy.save(function (error, data) {
+  // This function takes the bishBoy person we created and saves it. Use the error throw to catch errors obviously.
+  bishBoy.save((error, data) => {
     if (error) return done(error);
     done(null, data);
   });
 };
 
+//** 4) Create Many Records with model.create()
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  // Need to use Person as that is the model we want to create our peopoe in
+  Person.create(arrayOfPeople, (done) => {
+    // Need to add the function that handles error after saving arrayOfPeople (.create() uses .save() for each person in the array)
+    if (error) return done(error);
+    done(null, data);
+  });
 };
 
+//** 5)
 const findPeopleByName = (personName, done) => {
   done(null /*, data*/);
 };
