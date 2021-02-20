@@ -142,7 +142,7 @@ const removeManyPeople = (done) => {
 const queryChain = (done) => {
   const foodToSearch = "burrito";
 
-  Person.find(foodToSearch)
+  Person.find({ favoriteFoods: foodToSearch })
     .sort({ name: "ascending" }) // Sorting all results found by name
     .limit(2) // How many results are allowed to pass
     .select({ age: -1 }) // Removes age from object (deselects it from model)
