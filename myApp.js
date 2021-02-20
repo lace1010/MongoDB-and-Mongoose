@@ -89,8 +89,6 @@ const findEditThenSave = (personId, done) => {
       if (error) return console.log(error);
       done(null, updatedPerson);
     });
-
-    done(null, person); // Will now be the updatedPerson we saved
   });
 };
 
