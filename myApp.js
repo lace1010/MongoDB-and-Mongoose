@@ -93,21 +93,32 @@ const findEditThenSave = (personId, done) => {
 };
 
 //** 9) Perform New Updates on a Document Using model.findOneAndUpdate
+// In link https://mongoosejs.com/docs/api.html#model_Model.update find the instructions for findOneAndUpdate
+// Syntax for findOneAndUpdate is A.findOneAndUpdate(conditions, update, options, callback) // executes
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
-  Person.findOneAndUpdate(
-    { name: personName },
-    { new: true }, // You should return the updated document. To do that, you need to pass the options document { new: true } as the 3rd argument to findOneAndUpdate(). By default, these methods return the unmodified object.
-    (error, foundPerson) => {
-      if (error) return console.log(error);
-      foundPerson.age = ageToSet;
-      done(null, foundPerson);
-    }
-  );
+  let query = { name: personName };
+  let update = { age: ageToSet };
+  let option = { new: true }; // You should return the updated document. To do that, you need to pass the options document { new: true } as the 3rd argument to findOneAndUpdate(). By default, these methods return the unmodified object. Thus the { new: true } is required to pass the updated version of the object
+
+  Person.findOneAndUpdate(query, update, option, (error, foundPerson) => {
+    if (error) return console.log(error);
+    done(null, foundPerson);
+  });
+  /* Another way of doing this is by not using variables. Only chose variables after finsihing to make it look cleaner
+
+   Person.findOneAndUpdate({name: personName}, {age: ageToSet}, {new: true}, (err, updatedDoc) => {
+    if(err) return console.log(err);
+    done(null, updatedDoc);
+  }) */
 };
 
+//** 10) Delete One Document Using model.findByIdAndRemove
 const removeById = (personId, done) => {
-  done(null /*, data*/);
+  Person.findByIdAndRemove(personId, (error, person) => {
+    if (error) return console.log(error);
+    done(null, person);
+  });
 };
 
 const removeManyPeople = (done) => {
