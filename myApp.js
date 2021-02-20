@@ -106,7 +106,6 @@ const findAndUpdate = (personName, done) => {
     done(null, foundPerson);
   });
   /* Another way of doing this is by not using variables. Only chose variables after finsihing to make it look cleaner
-
    Person.findOneAndUpdate({name: personName}, {age: ageToSet}, {new: true}, (err, updatedDoc) => {
     if(err) return console.log(err);
     done(null, updatedDoc);
@@ -145,7 +144,7 @@ const queryChain = (done) => {
   Person.find({ favoriteFoods: foodToSearch })
     .sort({ name: "asc" }) // Sorting all results found by name
     .limit(2) // How many results are allowed to pass
-    .select("-age") // Removes age from object (deselects it from model)
+    .select("-age") // Removes age from object (deselects it from model. // could also say .select({age: 0})
     .exec((error, searchedData) => {
       if (error) return console.log(error);
       done(null, searchedData);
