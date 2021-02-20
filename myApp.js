@@ -97,12 +97,12 @@ const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
   Person.findOneAndUpdate(
     { name: personName },
+    { new: true }, // You should return the updated document. To do that, you need to pass the options document { new: true } as the 3rd argument to findOneAndUpdate(). By default, these methods return the unmodified object.
     (error, foundPerson) => {
       if (error) return console.log(error);
       foundPerson.age = ageToSet;
       done(null, foundPerson);
-    },
-    { new: true } // You should return the updated document. To do that, you need to pass the options document { new: true } as the 3rd argument to findOneAndUpdate(). By default, these methods return the unmodified object.
+    }
   );
 };
 
