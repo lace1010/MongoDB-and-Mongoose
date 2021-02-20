@@ -124,16 +124,32 @@ const removeById = (personId, done) => {
 //** 11) Delete Many Documents with model.remove()
 const removeManyPeople = (done) => {
   const nameToRemove = "Mary";
+
+  // Removes all peoople with the name Mary.
+  // The Model.remove() doesn’t return the deleted document, but a JSON object containing the outcome of the operation, and the number of items affected.
   Person.remove({ name: nameToRemove }, (error, removedPeople) => {
     if (error) return console.log(error);
     done(null, removedPeople);
   });
 };
 
+/* 12) Chain Search Query Helpers to Narrow Search Results
+  If you don’t pass the callback as the last argument to Model.find() (or to the other search methods), 
+  the query is not executed. You can store the query in a variable for later use. This kind of object enables you to 
+  build up a query using chaining syntax. The actual db search is executed when you finally chain the method .exec(). 
+  You always need to pass your callback to this last method. There are many query helpers, here we'll use the most commonly used.*/
+
 const queryChain = (done) => {
   const foodToSearch = "burrito";
 
-  done(null /*, data*/);
+  Person.find(foodToSearch)
+    .sort({ name: "ascending" }) // Sorting all results found by name
+    .limit(2) // How many results are allowed to pass
+    .select({ age: -1 }) // Removes age from object (deselects it from model)
+    .exec((error, chainedData) => {
+      if (error) return console.log(error);
+      done(null, chainedData);
+    });
 };
 
 /** **Well Done !!**
