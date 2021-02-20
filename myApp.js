@@ -31,19 +31,19 @@ let bishBoy = new Person({
 // Create and save the bishBoy person with a function
 const createAndSavePerson = (done) => {
   // This function takes the bishBoy person we created and saves it. Use the error throw to catch errors obviously.
-  bishBoy.save((error, data) => {
-    if (error) return done(error);
-    done(null, data);
+  bishBoy.save((error, person) => {
+    if (error) return console.log(error);
+    done(null, person);
   });
 };
 
 //** 4) Create Many Records with model.create()
 const createManyPeople = (arrayOfPeople, done) => {
   // Need to use Person as that is the model we want to create our peopoe in
-  Person.create(arrayOfPeople, (error, data) => {
+  Person.create(arrayOfPeople, (error, Array) => {
     // Need to add the function that handles error after saving arrayOfPeople (.create() uses .save() for each person in the array)
-    if (error) return done(error);
-    done(null, data);
+    if (error) return console.log(error);
+    done(null, Array);
   });
 };
 
@@ -51,33 +51,47 @@ const createManyPeople = (arrayOfPeople, done) => {
 
 const findPeopleByName = (personName, done) => {
   // Need to add the object with just name because in model Person personName will be the value of the name key in a specific object
-  Person.find({ name: personName }, (error, data) => {
-    if (error) return done(error);
-    done(null, data);
+  Person.find({ name: personName }, (error, person) => {
+    if (error) return console.log(error);
+    done(null, person);
   });
 };
 
 //** 6) Use model.findOne() to Return a Single Matching Document from Your Database
-const findOneByFood = (food, done) => {
+const findOneByFood = (food, foundFood) => {
   // food is a value to an object key so we need to put in an object with the key that accepts food strings into findOne() for the argument
   Person.findOne({ favoriteFoods: food }, (error, data) => {
-    if (error) return done(error);
-    done(null, data);
+    if (error) return console.log(error);
+    done(null, foundFood);
   });
 };
 
 //** 7) Use model.findById() to Search Your Database By _id
 const findPersonById = (personId, done) => {
-  Person.findById(personId, (error, data) => {
-    if (error) return done(error);
-    done(null, data);
+  Person.findById(personId, (error, idOfPerson) => {
+    if (error) return console.log(error);
+    done(null, idOfPerson);
   });
 };
 
+//** 8) Perform Classic Updates by Running Find, Edit, then Save
 const findEditThenSave = (personId, done) => {
   const foodToAdd = "hamburger";
+  // First find the person by searching for id.
+  Person.findById(personId, (error, person) => {
+    if (error) return console.log(error);
+    // Then push the foodToAdd variable to the favoriteFoods array
+    person.favoriteFoods.push(foodToAdd);
 
-  done(null /*, data*/);
+    // Next we must save our changes to the person in the database.
+    // When using save we should always have a callback function that handles errors.
+    person.save((error, updatedPerson) => {
+      if (error) return console.log(error);
+      done(null, updatedPerson);
+    });
+
+    done(null, person); // Will now be the updatedPerson we saved
+  });
 };
 
 const findAndUpdate = (personName, done) => {
